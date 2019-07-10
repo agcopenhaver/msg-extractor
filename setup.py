@@ -1,4 +1,5 @@
 import os
+import sys
 from setuptools import setup
 import re
 
@@ -10,8 +11,10 @@ main_module = 'extract_msg'
 
 # read in the description from README
 with open("README.rst") as stream:
-    long_description = stream.read()
-
+    if sys.version_info[0] < 3:
+        long_description = read(stream, encoding='utf-8')
+    else:
+        long_description = stream.read()
 # get the version from the ExtractMsg script. This can not be directly
 # imported because ExtractMsg imports olefile, which may not be installed yet
 version_re = re.compile("__version__ = '(?P<version>[0-9\.]*)'")
