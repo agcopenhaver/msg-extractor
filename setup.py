@@ -10,10 +10,11 @@ main_module = 'extract_msg'
 # main_script = main_module + '.py'
 
 # read in the description from README
-with open("README.rst") as stream:
-    if sys.version_info[0] < 3:
-        long_description = read(stream, encoding='utf-8')
-    else:
+if os.name=='nt' and sys.version_info[0] >= 3:
+    with open("README.rst", encoding='utf-8') as stream:
+        long_description = stream.read()
+else:
+    with open("README.rst") as stream:
         long_description = stream.read()
 # get the version from the ExtractMsg script. This can not be directly
 # imported because ExtractMsg imports olefile, which may not be installed yet
